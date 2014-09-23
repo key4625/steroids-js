@@ -13,7 +13,12 @@ class NavigationBarButton
     if @title?
       params.title = @title
     else
-      relativeTo = steroids.app.path
+      # iOS requires app.path, Android app.absolutePath
+      relativeTo = if typeof AndroidAPIBridge is 'undefined'
+         steroids.app.path
+      else
+        steroids.app.absolutePath
+
       params.imagePath = relativeTo + @imagePath
 
     params.imageAsOriginal = @imageAsOriginal

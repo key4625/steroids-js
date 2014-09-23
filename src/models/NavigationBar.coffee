@@ -85,7 +85,11 @@ class NavigationBar
 
     if title or options.titleImagePath
       steroids.on "ready", ()=>
-        relativeTo = options.relativeTo ? steroids.app.path
+        # Use only app.absolutePath on Android
+        relativeTo = if typeof AndroidAPIBridge is 'undefined'
+          options.relativeTo ? steroids.app.path
+        else
+          steroids.app.absolutePath
 
         parameters = if title
           title: title
@@ -208,7 +212,12 @@ class NavigationBar
     steroids.debug "steroids.navigationBar.update options: #{JSON.stringify options} callbacks: #{JSON.stringify callbacks}"
     steroids.on "ready", ()=>
 
-      relativeTo = steroids.app.path
+      # iOS requires app.path, Android app.absolutePath
+      relativeTo = if typeof AndroidAPIBridge is 'undefined'
+        steroids.app.path
+      else
+        steroids.app.absolutePath
+
       params = {}
 
       if options.constructor.name == "String"
