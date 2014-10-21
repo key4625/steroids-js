@@ -213,7 +213,7 @@ class NavigationBar
     steroids.on "ready", ()=>
 
       # iOS requires app.path, Android app.absolutePath
-      relativeTo = if typeof AndroidAPIBridge is 'undefined'
+      relativeTo = if typeof FreshAndroidAPIBridge is 'undefined'
         steroids.app.path
       else
         steroids.app.absolutePath
